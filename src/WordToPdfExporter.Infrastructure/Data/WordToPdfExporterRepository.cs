@@ -17,6 +17,11 @@ public sealed class WordToPdfExporterRepository<T>(WordToPdfExporterContext dbCo
         _currentTransaction ??= await dbContext.Database.BeginTransactionAsync();
     }
 
+    public async Task LockTable(bool lockTable)
+    {
+
+    }
+
     public async Task RollbackTransactionAsync()
     {
         try
