@@ -1,0 +1,6 @@
+@WordToPdfExporter.API_HostAddress = http://localhost:5031
+
+GET {{WordToPdfExporter.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

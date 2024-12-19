@@ -1,8 +1,48 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419A6ACE-0419-4315-A6FB-B0E63D39432E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E63DB355-B283-460C-87E9-68A8E831ADCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{626CE5D3-A235-429B-9709-66007CD169A7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		dotnet.ruleset = dotnet.ruleset
+		global.json = global.json
+		LICENSE = LICENSE
+		README.md = README.md
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordToPdfExporter.API", "src\WordToPdfExporter.API\WordToPdfExporter.API.csproj", "{8A21AFBE-133D-4833-A3D3-FC52C0545E30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordToPdfExporter.Core", "src\WordToPdfExporter.Core\WordToPdfExporter.Core.csproj", "{2A04345A-7E61-4542-ACFA-467AD865E9C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordToPdfExporter.Infrastructure", "src\WordToPdfExporter.Infrastructure\WordToPdfExporter.Infrastructure.csproj", "{9E9780D8-7BAC-42E7-9C2F-7CB165F5E771}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8A21AFBE-133D-4833-A3D3-FC52C0545E30} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
+		{2A04345A-7E61-4542-ACFA-467AD865E9C2} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
+		{9E9780D8-7BAC-42E7-9C2F-7CB165F5E771} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A21AFBE-133D-4833-A3D3-FC52C0545E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A21AFBE-133D-4833-A3D3-FC52C0545E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A21AFBE-133D-4833-A3D3-FC52C0545E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A21AFBE-133D-4833-A3D3-FC52C0545E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A04345A-7E61-4542-ACFA-467AD865E9C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A04345A-7E61-4542-ACFA-467AD865E9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A04345A-7E61-4542-ACFA-467AD865E9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A04345A-7E61-4542-ACFA-467AD865E9C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9780D8-7BAC-42E7-9C2F-7CB165F5E771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9780D8-7BAC-42E7-9C2F-7CB165F5E771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9780D8-7BAC-42E7-9C2F-7CB165F5E771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9780D8-7BAC-42E7-9C2F-7CB165F5E771}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
