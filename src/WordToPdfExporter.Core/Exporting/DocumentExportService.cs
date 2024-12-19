@@ -10,15 +10,15 @@ public class DocumentExportService(
     IAsyncRepository<DocumentExport> documentExportRepository,
     ILockService lockService) : IDocumentExportService
 {
+    private readonly int _lockTimeoutMinutes = 5;
+
     public async Task<byte[]> ExportDocumentToPDFAsync(ExportDocumentRequest request, CancellationToken cancellationToken = default)
     {
-        var lockTimeoutMinutes = 3;
-        
         try
         {
-            await lockService.WaitForUnlockAsync(TimeSpan.FromMinutes(lockTimeoutMinutes));
+            await lockService.WaitForUnlockAsync(TimeSpan.FromMinutes(_lockTimeoutMinutes));
 
-            await lockService.LockAsync(TimeSpan.FromMinutes(lockTimeoutMinutes));
+            await lockService.LockAsync(TimeSpan.FromMinutes(_lockTimeoutMinutes));
 
             var body = JsonSerializer.Serialize(request);
             var documentExport = new DocumentExport
