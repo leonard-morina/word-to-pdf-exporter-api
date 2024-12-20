@@ -37,18 +37,18 @@ public class DocumentExportService(
 
             var wordApp = new Application();
             var wordDocument = wordApp.Documents.Open(tempWordFilePath);
-
+            
             var tempPdfFilePath = Path.Combine(Path.GetTempPath(), $"{tempDocumentName}.pdf");
-
+            
             wordDocument.ExportAsFixedFormat(
                 tempPdfFilePath,
                 WdExportFormat.wdExportFormatPDF,
                 OpenAfterExport: false);
             wordDocument.Close();
             wordApp.Quit();
-
+            
             var pdfBytes = await File.ReadAllBytesAsync(tempPdfFilePath, cancellationToken);
-
+            
             File.Delete(tempWordFilePath);
             File.Delete(tempPdfFilePath);
 
@@ -60,10 +60,10 @@ public class DocumentExportService(
             lockService.Unlock();
             throw new Exception($"Cannot process document: {ex.Message}");
         }
-        catch (Exception ex)
-        {
-            lockService.Unlock();
-            throw new Exception($"Cannot process document: {ex.Message}");
-        }
+        //catch (Exception ex)
+        //{
+        //    lockService.Unlock();
+        //    throw new Exception($"Cannot process document: {ex.Message}");
+        //}
     }
 }
