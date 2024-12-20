@@ -14,6 +14,10 @@ public class DocumentExportService(
 
     public async Task<byte[]> ExportDocumentToPDFAsync(ExportDocumentRequest request, CancellationToken cancellationToken = default)
     {
+        Document? wordDocument = null;
+        Application? wordApp = null;
+        byte[] pdfBytes;
+
         try
         {
             await lockService.WaitForUnlockAsync(TimeSpan.FromMinutes(_lockTimeoutMinutes));
@@ -35,8 +39,8 @@ public class DocumentExportService(
             var tempWordFilePath = Path.Combine(Path.GetTempPath(), $"{tempDocumentName}.docx");
             await File.WriteAllBytesAsync(tempWordFilePath, documentAsBytes, cancellationToken);
 
-            var wordApp = new Application();
-            var wordDocument = wordApp.Documents.Open(tempWordFilePath);
+            wordApp = new Application();
+            wordDocument = wordApp.Documents.Open(tempWordFilePath);
             
             var tempPdfFilePath = Path.Combine(Path.GetTempPath(), $"{tempDocumentName}.pdf");
             
@@ -47,23 +51,50 @@ public class DocumentExportService(
             wordDocument.Close();
             wordApp.Quit();
             
-            var pdfBytes = await File.ReadAllBytesAsync(tempPdfFilePath, cancellationToken);
+            pdfBytes = await File.ReadAllBytesAsync(tempPdfFilePath, cancellationToken);
             
             File.Delete(tempWordFilePath);
             File.Delete(tempPdfFilePath);
 
             lockService.Unlock();
-            return pdfBytes;
         }
         catch (COMException ex)
         {
             lockService.Unlock();
             throw new Exception($"Cannot process document: {ex.Message}");
         }
-        //catch (Exception ex)
-        //{
-        //    lockService.Unlock();
-        //    throw new Exception($"Cannot process document: {ex.Message}");
-        //}
+        catch (Exception ex)
+        {
+            lockService.Unlock();
+            throw new Exception($"Cannot process document: {ex.Message}");
+        }
+        finally
+        {
+            try
+            {
+
+                // Ensure proper cleanup of Word objects
+                if (wordDocument != null)
+                {
+                    wordDocument.Close(false);
+                    Marshal.ReleaseComObject(wordDocument);
+                }
+
+                if (wordApp != null)
+                {
+                    wordApp.Quit();
+                    Marshal.ReleaseComObject(wordApp);
+                }
+
+                // Force garbage collection to clean up remaining COM objects
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+            catch
+            {
+                //ignored
+            }
+        }
+        return pdfBytes;
     }
 }
